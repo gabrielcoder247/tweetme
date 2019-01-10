@@ -4,4 +4,6 @@
 <p> {{ object.user_id}}<br/>
     
     {{ object.timestamp|timesince}} ago </p>
+    {% empty %}
+    <p> No tweet yet.</p>
 {% endfor %}
