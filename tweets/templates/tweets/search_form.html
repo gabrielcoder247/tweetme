@@ -1,6 +1,6 @@
 <form   method='GET' action='{% url "tweet:list" %}'>
     <!-- <div class="form-group"> -->
-        <input  type='text' name='q' placeholder='search'/>
+        <input  type='text' name='q' placeholder='search' value='{{ request.GET.q }}'/>
         <!-- </div> -->
     <input type='submit' value='Search'/>
 
