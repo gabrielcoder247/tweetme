@@ -1,18 +1,32 @@
+from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms.utils import ErrorList
+from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView,ListView, CreateView
 from .models import Tweet
+from .mixins import FormUserNeededMixin,UserOwnerMixin
 from .forms import TweetModelForm
+from django.views.generic import (DetailView,
+                                ListView, 
+                                CreateView,
+                                UpdateView,
+                                DeleteView)
 
 # Create your views here.
-class TweetCreateView(CreateView):
+class TweetCreateView(LoginRequiredMixin,FormUserNeededMixin,CreateView):
     form_class = TweetModelForm
     template_name = "tweets/create_view.html"
     # fields = ['user', 'content'] 
     success_url = "/tweet/create/"
+    # login_url = '/admin/'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(TweetCreateView, self).form_valid(form)
+        if self.request.user.is_authenticated():
+            form.instance.user = self.request.user
+            return super(TweetCreateView, self).form_valid(form)
+        else:
+            form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([" User must be logged in  to continue "])
+            return self.form_invalid(form)    
 
 
 
@@ -37,6 +51,17 @@ class TweetListView(ListView):
         # print(context)
         return context
 
+class TweetUpdateView(UserOwnerMixin,UpdateView):
+    queryset = Tweet.objects.all()
+    form_class = TweetModelForm
+    template_name = 'tweets/update_view.html'
+    success_url = "/tweet/"
+
+
+class TweetDeleteView(LoginRequiredMixin, DeleteView):
+    model = Tweet
+    template_name = 'tweets/delete_confirm.html'
+    success_url = reverse_lazy("tweet:list") #reverse()    
 
 
 
