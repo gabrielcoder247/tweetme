@@ -1,8 +1,30 @@
-{% include "tweets/search_form.html" %} <br/>
+{% extends "base.html" %}
+
+{% block content %}
+
 {% for object in object_list %}
 
-<h3>{{ object.content}}</h3>
-<p> {{ object.user_id}}<br/>
+<div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="..." alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+                {{ object.content}} <br/>
+   
+        
+                {{ object.user_id}} | {{ object.timestamp|timesince}} ago </p>
+                
+          <!-- <h4 class="media-heading">Media heading</h4> -->
+          ...
+        </div>
+      </div>
     
-    {{ object.timestamp|timesince}} ago </p>
-{% endfor %}
+    <!-- {% include "tweets/search_form.html" %} <br/> -->
+    
+   
+     
+    {% endfor %}
+
+{% endblock content %}
