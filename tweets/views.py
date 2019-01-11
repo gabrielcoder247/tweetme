@@ -32,7 +32,7 @@ class TweetCreateView(FormUserNeededMixin,CreateView):
 
 
 class TweetDetailView(DetailView):
-    template_name = "tweets/detail_view.html"
+    # template_name = "tweets/detail_view.html"
     queryset = Tweet.objects.all()
 
     # def get_object(self):
