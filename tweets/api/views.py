@@ -3,6 +3,7 @@ from rest_framework import generics
 from django.db.models import Q
 from tweets.models import Tweet
 from .serializers import TweetModelSerializer
+from rest_framework import permissions
 
 
 class TweetListAPIView(generics.ListAPIView):
@@ -11,7 +12,7 @@ class TweetListAPIView(generics.ListAPIView):
 
 
     def get_queryset(self, *args, **kwargs):
-        qs = Tweet.objects.all()
+        qs = Tweet.objects.all().order_by("-timestamp")
         print(self.request.GET)
         query = self.request.GET.get("q", None)
         if query is not None:
@@ -21,7 +22,10 @@ class TweetListAPIView(generics.ListAPIView):
                     )
         return qs    
 
-    # def get_serializer_context(self, *args, **kwargs):
-    #     context = super(TweetListAPIView, self).get_serializer_context(*args, **kwargs)
-    #     context['request'] = self.request
-    #     return context
+class TweetCreateAPIView(generics.CreateAPIView):
+    serializer_class = TweetModelSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    
