@@ -2,13 +2,14 @@
 from rest_framework import generics
 from django.db.models import Q
 from tweets.models import Tweet
+from .pagination import StandardResultsPagination
 from .serializers import TweetModelSerializer
 from rest_framework import permissions
 
 
 class TweetListAPIView(generics.ListAPIView):
     serializer_class = TweetModelSerializer
-    # pagination_class = StandardResultsPagination
+    pagination_class = StandardResultsPagination
 
 
     def get_queryset(self, *args, **kwargs):

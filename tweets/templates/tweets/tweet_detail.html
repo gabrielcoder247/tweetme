@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class='row'>
+    <div class='col-sm-3 col-xs-12' style='background-color:yellow;'>
+        <h1>{{object.username}}</h1>
+    </div>
+<div class='col-sm-9 col-sm-12'>
+   <h1>Tweets</h1>
 
-
-
-<h3>{{ object.content}}</h3>
-<p> {{ object.user_id}}<br/>
-    {{ object.timestamp|timesince}} ago </p>
-
-
-
-
+</div>
+</div>
 {% endblock content %}
+
