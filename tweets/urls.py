@@ -5,11 +5,11 @@ from.views import (
     TweetDetailView,
     TweetListView,
     TweetUpdateView,
-    TweetDeleteView
+    TweetDeleteView,
 )
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
+  
     url(r'^$', RedirectView.as_view(url="/")), 
     url(r'^search/$', TweetListView.as_view(), name='list'), # /tweet/
     url(r'^create/$', TweetCreateView.as_view(), name='create'), #/tweet/create/

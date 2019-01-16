@@ -28,10 +28,6 @@ class Tweet(models.Model):
         
 
 
-    # def clean_content(self, *args,**kwargs):
-    #     content = self.cleaned_data.get("content")
-    #     if content == "abc":
-    #         raise forms.ValidationError("cannot be ABC")
-    #     return  super(Tweet, self).clean(*args,**kwargs)      
+        
    
     
