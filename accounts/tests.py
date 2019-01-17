@@ -16,6 +16,7 @@ class UserProfileTestCase(TestCase):
     def test_profile_created(self):
         username = self.username
         user_profile = UserProfile.objects.filter(user__username=self.username)
+        print(user_profile)
 
         self.assertTrue(user_profile.exists())
         self.assertTrue(user_profile.count() == 1)
