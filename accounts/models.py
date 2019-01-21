@@ -35,6 +35,14 @@ class UserProfileManager(models.Manager):
             return True
         return False
 
+    def recommended(self, user, limit_to=10):
+        print(user)
+        profile = user.profile 
+        following = profile.following.all()
+        following = profile.get_following()
+        qs = self.get_queryset().exclude(user__in=following).exclude(id=profile.id).order_by("?")[:limit_to]
+        return qs
+
 
 
 class UserProfile(models.Model):
@@ -62,13 +70,17 @@ class UserProfile(models.Model):
 
 
 
-# gab = User.objects.first()
+# cfe = User.objects.first()
 # User.objects.get_or_create() # (user_obj, true/false)
-# gab.save()
+# cfe.save()
 
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     if created:
         new_profile = UserProfile.objects.get_or_create(user=instance)
-        
+        # celery + redis
+        # deferred task
 
 post_save.connect(post_save_user_receiver, sender=settings.AUTH_USER_MODEL)
+
+
+
