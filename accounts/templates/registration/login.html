@@ -12,8 +12,9 @@ $(document).ready(function(){
 
 
 {% block content %}
-<div class='col-sm-6 col-sm-offset-3 text-center'>
+<div class='login col-sm-6 col-sm-offset-3 text-center'>
     <h1>Login</h1>
+    <hr>
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
